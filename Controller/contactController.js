@@ -1,5 +1,4 @@
 const asyncHandler = require("express-async-handler");
-const router=require('../routes/userRoutes');
 const Contact = require("../Models/contactModels");
 const getContacts = asyncHandler(async (req, res) => {
   const contacts = await Contact.find();

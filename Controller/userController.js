@@ -15,7 +15,6 @@ const registerUser = asyncHandler(async (req,res)=>{
     throw new Error("User already registered")
   }
   const hashedPassword = await bcrypt.hash(password,10)
-  console.log("hashed password:",hashedPassword); 
   const user=await User.create({
     username,
     email,
@@ -28,7 +27,6 @@ const registerUser = asyncHandler(async (req,res)=>{
     res.status(400);
     throw new Error("User data is not valid");
   }
-  res.json({message:"Register the user"})
 })
 
 
@@ -41,7 +39,7 @@ const loginUser = asyncHandler(async (req,res)=>{
   const user = await User.findOne({email});
 
   if(user && (await bcrypt.compare(password,user.password))){
-    const accessToken= jwt.signin({
+    const accessToken= jwt.sign({
       user:{
         username:user.username,
         email:user.email,
@@ -54,7 +52,6 @@ const loginUser = asyncHandler(async (req,res)=>{
     res.status(401);
     throw new Error("Email or Password is not Valid")
   }
-  res.json({message:"login User"}) 
 })
 
 
